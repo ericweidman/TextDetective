@@ -6,6 +6,7 @@ $(document).ready(function() {
 var jscon = {
     urls: {
         savegame: '/save-game',
+        userAction: '/user-action'
     }
 };
 
@@ -26,3 +27,23 @@ $('#savegame').click(function() {
         }
     });
 })
+
+function userAction(action) {
+    $.ajax({
+        url: jscon.urls.userAction,
+        method: "POST",
+        contentType: 'application/json; charset=utf-8',
+        data: action,
+        dataType: 'text',
+        success: function(response) {
+
+        },
+    });
+}
+
+$('#userAction').submit(function(event) {
+    event.preventDefault();
+    var action = $('input[name=userAction]').val();
+    userAction(action);
+    this.reset();
+});

@@ -37,11 +37,22 @@ body {
     font-size: 17px;
 }
 
-.inputButton {
+.submitAction {
     font-weight: bold;
     font-size: 17px;
     margin-left: 10px;
     height: 300px;
     width: 200px;
     height: 30px;
+}
+#chatbox {
+    position: absolute;
+    top: 5%;
+    left: 1.5%;
+    text-align:center;
+    background-color: inherit;
+    height:80%;
+    width:96%;
+    border:1px solid white;
+    overflow:auto;
 }
