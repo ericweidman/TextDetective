@@ -1,5 +1,21 @@
 $(document).ready(function() {
     $('body').addClass('animated fadeIn');
+    $.ajax({
+      url: '/intro',
+      method: "GET",
+      dataType: 'text',
+      success: function(intro){
+        setTimeout(function(){
+        var table = document.getElementById("gameText");
+        var row = table.insertRow(-1);
+        row.innerHTML = intro;
+        $(row).addClass('animated fadeIn');
+      }, 1000);
+      },
+      error: function(error){
+        alert('Nope');
+      }
+    })
 });
 
 

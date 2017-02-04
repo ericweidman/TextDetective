@@ -48,6 +48,12 @@ public class TextDetectiveController {
 
     }
 
+    @RequestMapping(path = "/intro", method = RequestMethod.GET)
+        public String intro(){
+            return "Did this get appended properly?";
+        }
+
+
     @RequestMapping(path = "/user-action", method = RequestMethod.POST)
     public String userAction(@RequestBody String userAction) {
 
@@ -67,6 +73,5 @@ public class TextDetectiveController {
         }
         System.out.println(response);
         return response;
-
     }
 }
