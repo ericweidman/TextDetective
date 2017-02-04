@@ -10,7 +10,7 @@ $(document).ready(function() {
         var row = table.insertRow(-1);
         row.innerHTML = intro;
         $(row).addClass('animated fadeIn');
-      }, 1000);
+      }, 2000);
       },
       error: function(error){
         alert('Nope');
