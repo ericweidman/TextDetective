@@ -36,9 +36,13 @@ function userAction(action) {
         data: action,
         dataType: 'text',
         success: function(response) {
-          var table = document.getElementById("gameText");
-          var row = table.insertRow(-1);
-          row.innerHTML = response;
+            setTimeout(function() {
+              var table = document.getElementById("gameText");
+              var row = table.insertRow(-1);
+              row.innerHTML = response;
+                $(row).addClass('animated fadeIn');
+            }, 1000);
+
         },
     });
 }
@@ -48,7 +52,8 @@ $('#userAction').submit(function(event) {
     var action = $('input[name=userAction]').val();
     var table = document.getElementById("gameText");
     var row = table.insertRow(-1);
-    row.innerHTML = action;
+    row.innerHTML = '<p>' + action + '</p>';
     userAction(action);
     this.reset();
+
 });
