@@ -21,11 +21,25 @@ public class TextDetectiveController {
     UserRepository users;
 
     @RequestMapping(path = "/create-user", method = RequestMethod.POST)
-    public void newUser(@RequestBody User newUser, HttpSession session) {
+    public void newUser(@RequestBody User newUser, HttpSession session) throws Exception {
 
-        session.setAttribute("username", newUser.getUserName());
-        User save = new User(newUser.getUserName(), newUser.getPin());
-        users.save(save);
+        User checkUser = users.findByUserName(newUser.getUserName());
+        User saveUser = new User(newUser.getUserName(), newUser.getPin());
+
+        if (newUser.getUserName() == null) {
+            throw new Exception("No username entered");
+        } else if (checkUser == null) {
+            session.setAttribute("username", newUser.getUserName());
+            users.save(saveUser);
+        } else if (newUser.getUserName().equals(checkUser.getUserName()) && !newUser.getPin().equals(checkUser.getPin())) {
+            throw new Exception("Invalid PIN");
+        } else if (newUser.getUserName().equals(checkUser.getUserName()) && newUser.getPin().equals(checkUser.getPin())) {
+            session.setAttribute("username", checkUser.getUserName());
+        } else {
+            session.setAttribute("username", newUser.getUserName());
+            users.save(saveUser);
+        }
+
     }
 
     @RequestMapping(path = "/save-game", method = RequestMethod.POST)
@@ -33,11 +47,25 @@ public class TextDetectiveController {
         session.invalidate();
 
     }
+
     @RequestMapping(path = "/user-action", method = RequestMethod.POST)
     public String userAction(@RequestBody String userAction) {
 
-        String response = "Am I seeing this?";
+        String response;
         System.out.println(userAction);
+
+        switch (userAction) {
+            case "1":
+                response = "Option 1";
+                break;
+            case "2":
+                response = "Option 2";
+                break;
+            default:
+                response = "Option 3";
+                break;
+        }
+        System.out.println(response);
         return response;
 
     }

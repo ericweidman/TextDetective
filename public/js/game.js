@@ -36,7 +36,9 @@ function userAction(action) {
         data: action,
         dataType: 'text',
         success: function(response) {
-
+          var table = document.getElementById("gameText");
+          var row = table.insertRow(-1);
+          row.innerHTML = response;
         },
     });
 }
@@ -44,6 +46,9 @@ function userAction(action) {
 $('#userAction').submit(function(event) {
     event.preventDefault();
     var action = $('input[name=userAction]').val();
+    var table = document.getElementById("gameText");
+    var row = table.insertRow(-1);
+    row.innerHTML = action;
     userAction(action);
     this.reset();
 });

@@ -27,7 +27,7 @@ function newUser(user) {
         error: function(error) {
             console.log("Add User", error);
             console.log(user);
-            alert("Fail!");
+            alert('Username taken.')
         }
     });
 }

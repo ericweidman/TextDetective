@@ -2,6 +2,8 @@ body {
     background-color: black;
     color: white;
     font-family: 'Roboto Slab', serif;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 #savegame {
@@ -45,14 +47,13 @@ body {
     width: 200px;
     height: 30px;
 }
-#chatbox {
-    position: absolute;
-    top: 5%;
-    left: 1.5%;
-    text-align:center;
-    background-color: inherit;
-    height:80%;
-    width:96%;
-    border:1px solid white;
-    overflow:auto;
+
+#gameText{
+  position: absolute;
+  margin-left: 30px;
+  border: 1px solid white;
+  width: 95%;
+  bottom: 10%;
+  overflow: scroll;
+
 }
