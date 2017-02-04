@@ -1,0 +1,16 @@
+body {
+    background-color: black;
+    color: white;
+    font-family: 'Roboto Slab', serif;
+}
+
+#savegame {
+    position: absolute;
+    top: 95%;
+    left: 89%;
+    font-size: 17px;
+    height: 27px;
+    width: 130px;
+    margin-left: -65px;
+    margin-top: -25px;
+}
