@@ -33,4 +33,14 @@ public class TextDetectiveController {
         session.invalidate();
 
     }
+
+
+    @RequestMapping(path = "userAction", method = RequestMethod.POST)
+    public String userAction(@RequestBody String userAction) {
+
+        String response = "Am I seeing this?";
+
+
+        return response;
+    }
 }

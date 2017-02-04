@@ -5,12 +5,43 @@ body {
 }
 
 #savegame {
+    font-weight: bold;
+    font-size: 17px;
+    height: 300px;
+    width: 200px;
+    height: 30px;
     position: absolute;
     top: 95%;
-    left: 89%;
+    left: 5%;
     font-size: 17px;
-    height: 27px;
-    width: 130px;
     margin-left: -65px;
     margin-top: -25px;
+}
+
+#inputbar {
+    position: absolute;
+    top: 95%;
+    left: 17%;
+    margin-left: -65px;
+    margin-top: -25px;
+    white-space: nowrap;
+}
+
+.userAction {
+    color: white;
+    background-color: inherit;
+    text-align: left;
+    font-weight: bold;
+    height: 27px;
+    width: 323%;
+    font-size: 17px;
+}
+
+.inputButton {
+    font-weight: bold;
+    font-size: 17px;
+    margin-left: 10px;
+    height: 300px;
+    width: 200px;
+    height: 30px;
 }

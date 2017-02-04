@@ -1,8 +1,11 @@
-var jscon = {
+$(document).ready(function() {
+    $('body').addClass('animated fadeIn');
+});
 
+
+var jscon = {
     urls: {
         savegame: '/save-game',
-
     }
 };
 
@@ -11,8 +14,12 @@ $('#savegame').click(function() {
         url: jscon.urls.savegame,
         method: "POST",
         success: function(data) {
-            window.location.replace("index.html");
+            $('body').addClass('animated fadeOut');
+            setTimeout(function() {
+                window.location.href = "index.html"
+            }, 1700)
         },
+
         error: function(error) {
             console.log(error);
             alert("Fail!");
