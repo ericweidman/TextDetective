@@ -19,10 +19,14 @@ function newUser(user) {
         data: JSON.stringify(user),
         dataType: 'text',
         success: function(data) {
-            $('body').addClass('animated fadeOut');
+            $('#f1').addClass('animated fadeOut');
+             $("#move").animate({bottom: '-=185px'}, 2000);
+          setTimeout(function() {
+              $('#move').addClass('animated fadeOut');
+          }, 4000)
             setTimeout(function() {
                 window.location.href = "game.html"
-            }, 1700)
+            }, 5000)
         },
         error: function(error) {
             console.log("Add User", error);

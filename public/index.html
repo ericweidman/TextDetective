@@ -11,14 +11,17 @@
 
 <body>
 
-    <header>DETECTIVE SARA</header>
+    <div id="move">DETECTIVE SARA</div>
 
+    <div id="f1">
     <form id="newUser" class="center">
-        <input class="userName" type="text" required name="userName" placeholder="Username" pattern="[A-Za-z]{6,25}" autocomplete="off" title="No spaces, Letters only. 6-25 characters.">
+        <input class="userName" type="text" required name="userName" placeholder="Username" pattern="[A-Za-z]{6,25}" autocomplete="off" title="No spaces, Letters only. 6-25 characters."
+        autofocus="autofoucs">
         <h1>Enter a username to save your game.</h1>
         <input class="pin" type="password" required name="pin" placeholder="PIN#" maxlength="4" pattern="[0-9]{4}" title="Four digits only. i.e. 0000. Probably don't use that." autocomplete="off">
         <h2>Enter a 4 digit pin. Please do not use a sensitive personal PIN.</h2>
         <button class="login" type="submit" name="login">Start/Resume</button>
+      </div>
     </form>
 </body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>

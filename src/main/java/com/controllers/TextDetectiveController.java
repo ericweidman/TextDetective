@@ -64,10 +64,10 @@ public class TextDetectiveController {
 
         String intro = "Sara Berkeley finds herself standing in front of an unremarkable Oakland home.</br>" +
                 "Today is a typical California spring day. The sun is shining, birds are chirping, the air the perfect kind of mild.</br>" +
-                "She tends not to appreciate days like today anymore. Her mind is constantly dampened by dark, ominous clouds.</br></br>" +
+                "She tends not to appreciate days like today anymore. Her world is constantly dampened by dark, ominous clouds.</br></br>" +
 
-                "Sara suffers from severe acute depression.</br>" +
-                "Oftentimes she thinks about how hard she would fight it when she was still young.</br>" +
+                "Sara suffers from major depression disorder. Her doctors diagnosed her recently, but she knew it the be the truth for the majority of her cognitive years.</br>" +
+                "Oftentimes she thinks about how hard she fought it when she was younger.</br>" +
                 "She is completely aware that she doesn't try to compete with it anymore. She is outmatched. Some days she almost embraces it.</br></br>"+
 
                 "She is at this particular house because she has her job to do. The same job she's been doing for years. A job she has always excelled at.</br>" +
@@ -117,6 +117,8 @@ public class TextDetectiveController {
                                 "\"Open (item)\" i.e. \"trashcan.\"</br>" +
                                 "\"About\"</br></br>" +
                                 "You are encouraged to experiment.</br></br>" +
+                                "Enter \"save\" to save and quit.</br>" +
+                                "Closing your browser before saving could cause you to lose your progress.</br></br>" +
                                 "---</br>";
                 break;
 

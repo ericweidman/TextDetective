@@ -1,5 +1,5 @@
 .center {
-    position: absolute;
+  position: absolute;
     width: 500px;
     height: 50px;
     top: 50%;
@@ -9,6 +9,7 @@
 }
 
 body {
+    overflow: hidden;
     background-color: black;
     color: white;
     font-family: 'Roboto Slab', serif;
@@ -18,7 +19,6 @@ h1 {
     text-align: left;
     font-size: 100%;
     margin-left: -32px;
-    !important
 }
 
 h2 {
@@ -28,15 +28,24 @@ h2 {
     !important
 }
 
-header {
-    font-size: 300%;
+#move {
+    white-space: nowrap;
+    width: 100px;
+    height: 100px;
     position: absolute;
-    top: 30%;
-    left: 37.6%;
-    margin-top: -25px;
+    top: 0;
+    bottom: 100px;
+    left: 0;
+    right: 375px;
+    margin: auto;
+    text-align: left;
+    font-size: 300%;
+
 }
 
 .login {
+    background-color: inherit;
+    color: white;
     font-weight: bold;
     font-size: 17px;
     margin-left: 10px;
@@ -46,6 +55,9 @@ header {
 }
 
 .userName {
+  color: white;
+  background-color: inherit;
+  outline: none;
     font-weight: bold;
     text-align: center;
     height: 27px;
@@ -54,6 +66,9 @@ header {
 }
 
 .pin {
+  color: white;
+  background-color: inherit;
+  outline: none;
   font-weight: bold;
   text-align: center;
     height: 27px;
