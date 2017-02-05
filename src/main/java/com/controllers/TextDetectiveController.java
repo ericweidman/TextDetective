@@ -58,18 +58,31 @@ public class TextDetectiveController {
         String isBrian = brian.toLowerCase();
 
         String hiBrian = "Hi Brian! I suspect you might be one of the only people who plays this.</br>" +
-                "So I wrote this switch statement specifically just to say thanks.</br>" +
-                "Thanks!</br></br>";
+                "I wrote this switch statement specifically just to say thanks.</br>" +
+                "So, Thanks!</br>" +
+                "---</br></br>";
 
-        String intro = "Sara Berkeley finds herself standing outside of a decidedly unremarkable Oakland home.</br>" +
-                "It is a typical California spring day, warm and beautiful.</br>Although she tends not to notice such things anymore.</br>" +
-                "She is here to do a job. A job she's done for years, and one she is rather good at.</br>" +
-                "She is a detective for the Oakland Police Department. It is also a job she despises.</br>" +
-                "She lets out a long sigh. </br>\"Well, let's get this over with\" she muttered.</br></br>" +
-                "You may type 'help' at any time.";
+        String intro = "Sara Berkeley finds herself standing in front of an unremarkable Oakland home.</br>" +
+                "Today is a typical California spring day. The sun is shining, birds are chirping, the air the perfect kind of mild.</br>" +
+                "She tends not to appreciate days like today anymore. Her mind is constantly dampened by dark, ominous clouds.</br></br>" +
+
+                "Sara suffers from severe acute depression.</br>" +
+                "Oftentimes she thinks about how hard she would fight it when she was still young.</br>" +
+                "She is completely aware that she doesn't try to compete with it anymore. She is outmatched. Some days she almost embraces it.</br></br>"+
+
+                "She is at this particular house because she has her job to do. The same job she's been doing for years. A job she has always excelled at.</br>" +
+                "She is a detective for the Oakland City Police Department.</br></br>" +
+
+                "Sara despises her work.</br></br>" +
+
+                "She let out a long sigh. </br>" +
+                "\"Well, let's get this over with.\" she muttered.</br></br>" +
+                "---</br></br>" +
+
+                "Enter \"commands\" for a list of actions to help get you started.</br></br>" +
+                "---</br>";
 
         switch (isBrian) {
-            case "brian":
             case "brianweston":
             case "mrchozo":
             case "bweston":
@@ -87,11 +100,13 @@ public class TextDetectiveController {
         String userName = (String) session.getAttribute("username");
         String action = userAction.toLowerCase();
         String response;
+        boolean frontDoor = false;
 
         switch (action) {
             case "help":
             case "halp":
             case "wtf":
+            case "commands":
                 response =
                         "---<br>" +
                                 "Useful commands include things like:</br></br>" +
@@ -101,17 +116,19 @@ public class TextDetectiveController {
                                 "\"Inventory\"</br>" +
                                 "\"Open (item)\" i.e. \"trashcan.\"</br>" +
                                 "\"About\"</br></br>" +
-                                "You are encouraged to experiment.</br>" +
+                                "You are encouraged to experiment.</br></br>" +
                                 "---</br>";
                 break;
 
             case "about":
             case "detective sara":
-                response = "You are currently logged in as " + userName+ ".</br>" +
-                        "This game was created by Eric Weidman.</br>" +
-                        "If you're reading this, thank you so much for playing!</br>" +
+            case "about detective sara":
+                response = "You are currently logged in as " + userName + ".</br>" +
+                        "---</br>" +
+                        "Detective Sara was created by Eric Weidman.</br>" +
+                        "If you're reading this, thank you for playing!</br>" +
                         "If you have any questions/comments/feedback/criticisms/devjobs,</br>" +
-                        "I would love to hear from you! Shoot me an email ericweidman@gmail.com.</br>" +
+                        "I would love to hear from you! Shoot me an email - ericweidman@gmail.com.</br>" +
                         "All code for this game can be found at https://github.com/ericweidman/TextDetective</br>";
 
                 break;
@@ -127,8 +144,10 @@ public class TextDetectiveController {
             case "break leg":
             case "hurt self":
             case "cut arm":
+            case "cut leg:":
+            case "cut self":
             case "punch self":
-                response = "Sara considers hurting herself. She thinks there will be plenty of time for self loating later.";
+                response = "Sara considers hurting herself. She thinks there will be plenty of time for self loathing later.";
                 break;
 
             case "item":
@@ -139,33 +158,35 @@ public class TextDetectiveController {
 
             case "inspect keyring":
             case "inspect keys":
-                response = "The keyring she is carrying used to belong to a criminal. There are two keys attached.</br>" +
+                response = "The keyring she is carrying used to belong to John Mercer. There are two keys attached.</br>" +
                         "One of the keys looks like any standard key. It probably unlocks a door.</br>" +
-                        "The other key has a large fob attached, displaying a FORD logo.</br>";
+                        "The other key has a large fob attached, displaying a FORD logo.";
                 break;
 
             case "open keys":
             case "open keyring":
-                response = "Sara considers opening the key ring, but decides against it as there isn't much of a reason.";
+                response = "Sara considers opening the key ring, but decides against it as she doesn't have much of a reason.";
                 break;
 
             case "break keys":
             case "break keyring":
             case "smash keys":
             case "smash keyring":
-                response = "Sara would like to break the keyring when she considers its previous owner but she decides she needs it.";
+                response = "Sara normally doesn't mind breaking things, but she decides she needs the keyring.";
                 break;
 
             case "throw keys":
             case "throw keyring":
-                response = "Sara would like to throw the keyring when she considers its previous owner, but she decides she needs it.";
+                response = "Sara had a sudden urge to throw the keyring, but it eventually passed.";
                 break;
 
             case "look around":
                 response = "Sara looks around. She is standing on the sidewalk in an average Oakland neighborhood.</br>" +
-                        "Every nth house looks pretty much the same. Most of the driveways are empty. It is " +
-                        "the early afternoon on a Tuesday, presumably everyone is still at work.</br>" +
-                        "The house closest to her she knows to be empty, it also looks as much.";
+                        "It's the early afternoon on a Tuesday, most of the driveways are empty.</br> " +
+                        "The normal folk who live here are at work.</br>" +
+                        "All of the houses are rather plain looking, every nth house or so are seemingly identical.</br>"+
+                        "The uninteresting house closest to her, she knows to be empty. Her cruiser is parked in the driveway.</br>" +
+                        "What is left of her sense of duty beckons her to the front door.";
                 break;
 
             case "inspect":
@@ -173,7 +194,7 @@ public class TextDetectiveController {
                 break;
 
             case "open":
-                response = "Sara decides she needs something to open, alas she has no ideas.";
+                response = "Sara decides she needs something to open, unfortunately she has no ideas.";
                 break;
 
             case "open trashcan":
@@ -184,6 +205,12 @@ public class TextDetectiveController {
                 response = "There is no trashcan nearby for Sara to inspect.";
                 break;
 
+
+            case "inspect door":
+            case "inspect front door":
+                response = "Sara can see the door from here, but from this distance she cannot make out any distinguishing characteristics.";
+                break;
+
             case "inspect doorknob":
                 response = "Sara can hardly see the doorknob from where she is standing.";
                 break;
@@ -191,16 +218,61 @@ public class TextDetectiveController {
             case "open doorknob":
             case "open door":
             case "unlock door":
-                response = "Sara cannot reach the door from where she is standing on the sidewalk. She is a bit ahead of herself.";
+                response = "Sara cannot reach the door from where she is standing on the sidewalk, let alone open it.";
                 break;
 
+            case "jump":
+            case "jump up and down":
+            case "jump for joy":
+                response = "Sara cannot think of any reasons to jump for joy.";
+                break;
+
+            case "walk to the door":
             case "go to the front door":
             case "move to the front door":
             case "walk to the front door":
             case "go to front door":
             case "move to front door":
             case "walk to front door":
-                response = "MORE STORY STUFF HERE.";
+                response = "As Sara walks towards the door, she starts to think about Johnathan Mercer.</br>" +
+                        "Johnathan suffocated himself earlier this morning during his latest stint in a city jail cell.</br>" +
+                        "Apparently somebody had forgotten to remove his belt before locking him up for the night.</br>" +
+                        "He did it shorty after a search warrant for his house had been issued.</br>" +
+                        "The same house Sara was headed to conduct a search on.</br><br>" +
+
+                        "She thought the suicide a bit odd, Johnathan had been in and out the county jail more times than she could remember.</br>" +
+                        "His slimy lawyer normally didn't have any trouble getting him out.</br>" +
+                        "Typically one of her idiot coworkers would forget how to book him properly, or forget to read him his rights,</br>" +
+                        " or beat the ever loving shit out of him before bringing him in.</br></br>" +
+
+                        "Her fellow officers didn't give the suicide a second thought, in fact they celebrated it.</br>" +
+                        "While she didn't have any respect for Johnathan, she saw no reason to celebrate another addition to" +
+                        " the long list of her coworkers fuck-ups.</br>" +
+                        "She hates everyone in her precinct.</br></br>" +
+
+                        "Her final thought before she reached the door was \"lucky bastard.\"</br>"+
+                        "She chuckled to herself.";
+                break;
+
+            case "overwatch":
+            case "overwatch opinions":
+                response = "Oddly enough Sara starts thinking about some Overwatch truths.</br>" +
+                        "\"Bastion sucks.\"</br>" +
+                        "\"Never do you need a Hanzo AND a Widowmaker.\"</br>" +
+                        "\"Tracer is the best character in the game.\"";
+                break;
+
+            case "think":
+            case "daydream":
+            case "ponder":
+                response = "Sara doesn't want to think about things right now. She spends a lot of time avoiding her thoughts.";
+                break;
+
+            case "this sucks":
+            case "this game sucks":
+            case "sara sucks":
+            case "detective sara sucks":
+                response = "\"No, you suck.\" Sara suddenly quipped for some reason that even baffled her...";
                 break;
 
             default:
