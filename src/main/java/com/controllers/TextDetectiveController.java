@@ -61,11 +61,11 @@ public class TextDetectiveController {
                 "So I wrote this switch statement specifically just to say thanks.</br>" +
                 "Thanks!</br></br>";
 
-        String intro = "Sara Berkeley found herself standing outside of a decidedly unremarkable Oakland home.</br>" +
-                "It was a typical California spring day, warm and beautiful.</br>Although she tended not to notice such things anymore.</br>" +
-                "She is here to do a job. A job she'd done for years, and one she is rather good at.</br>" +
+        String intro = "Sara Berkeley finds herself standing outside of a decidedly unremarkable Oakland home.</br>" +
+                "It is a typical California spring day, warm and beautiful.</br>Although she tends not to notice such things anymore.</br>" +
+                "She is here to do a job. A job she's done for years, and one she is rather good at.</br>" +
                 "She is a detective for the Oakland Police Department. It is also a job she despises.</br>" +
-                "She let out a long sigh. </br>\"Well, let's get this over with\" she muttered.</br></br>" +
+                "She lets out a long sigh. </br>\"Well, let's get this over with\" she muttered.</br></br>" +
                 "You may type 'help' at any time.";
 
         switch (isBrian) {
@@ -82,13 +82,16 @@ public class TextDetectiveController {
 
 
     @RequestMapping(path = "/user-action", method = RequestMethod.POST)
-    public String userAction(@RequestBody String userAction) {
+    public String userAction(@RequestBody String userAction, HttpSession session) {
 
+        String userName = (String) session.getAttribute("username");
         String action = userAction.toLowerCase();
         String response;
 
         switch (action) {
             case "help":
+            case "halp":
+            case "wtf":
                 response =
                         "---<br>" +
                                 "Useful commands include things like:</br></br>" +
@@ -103,19 +106,34 @@ public class TextDetectiveController {
                 break;
 
             case "about":
-                response = "This game was created by Eric Weidman.</br>" +
+            case "detective sara":
+                response = "You are currently logged in as " + userName+ ".</br>" +
+                        "This game was created by Eric Weidman.</br>" +
                         "If you're reading this, thank you so much for playing!</br>" +
                         "If you have any questions/comments/feedback/criticisms/devjobs,</br>" +
                         "I would love to hear from you! Shoot me an email ericweidman@gmail.com.</br>" +
                         "All code for this game can be found at https://github.com/ericweidman/TextDetective</br>";
+
                 break;
 
             case "kill self":
             case "kill yourself":
-                response = "Sara considers killing herself for brief a moment. She decided now is not the time.";
+            case "kill sara":
+            case "die":
+                response = "Sara considers killing herself for brief a moment. She decides now is not the time.";
                 break;
 
+            case "break arm":
+            case "break leg":
+            case "hurt self":
+            case "cut arm":
+            case "punch self":
+                response = "Sara considers hurting herself. She thinks there will be plenty of time for self loating later.";
+                break;
+
+            case "item":
             case "inventory":
+            case "items":
                 response = "Sara has a keyring.";
                 break;
 
@@ -131,15 +149,35 @@ public class TextDetectiveController {
                 response = "Sara considers opening the key ring, but decides against it as there isn't much of a reason.";
                 break;
 
+            case "break keys":
+            case "break keyring":
+            case "smash keys":
+            case "smash keyring":
+                response = "Sara would like to break the keyring when she considers its previous owner but she decides she needs it.";
+                break;
+
+            case "throw keys":
+            case "throw keyring":
+                response = "Sara would like to throw the keyring when she considers its previous owner, but she decides she needs it.";
+                break;
+
             case "look around":
                 response = "Sara looks around. She is standing on the sidewalk in an average Oakland neighborhood.</br>" +
-                        "Every nth house looked pretty much the same. Most of the driveways were empty. It is " +
+                        "Every nth house looks pretty much the same. Most of the driveways are empty. It is " +
                         "the early afternoon on a Tuesday, presumably everyone is still at work.</br>" +
                         "The house closest to her she knows to be empty, it also looks as much.";
                 break;
 
+            case "inspect":
+                response = "Sara wonders what kind of things she'll get to inspect today.";
+                break;
+
+            case "open":
+                response = "Sara decides she needs something to open, alas she has no ideas.";
+                break;
+
             case "open trashcan":
-                response = "There is no trashcan nearby for Sara to open.";
+                response = "There is not a trashcan nearby for Sara to open.";
                 break;
 
             case "inspect trashcan":
@@ -147,13 +185,19 @@ public class TextDetectiveController {
                 break;
 
             case "inspect doorknob":
-                response = "Sara can hardly see the doorknob from where she is standing.</br>";
+                response = "Sara can hardly see the doorknob from where she is standing.";
                 break;
 
             case "open doorknob":
-                response ="Sara cannot reach the doorknob. She is getting a bit ahead of herself.";
+            case "open door":
+            case "unlock door":
+                response = "Sara cannot reach the door from where she is standing on the sidewalk. She is a bit ahead of herself.";
                 break;
 
+            case "go to the front door":
+            case "move to the front door":
+            case "walk to the front door":
+            case "go to front door":
             case "move to front door":
             case "walk to front door":
                 response = "MORE STORY STUFF HERE.";
