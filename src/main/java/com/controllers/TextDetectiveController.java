@@ -42,7 +42,6 @@ public class TextDetectiveController {
             session.setAttribute("username", newUser.getUserName().toLowerCase());
             users.save(saveUser);
         }
-
     }
 
     @RequestMapping(path = "/save-game", method = RequestMethod.POST)
@@ -66,7 +65,7 @@ public class TextDetectiveController {
                 "Today is a typical California spring day. The sun is shining, birds are chirping, the air the perfect kind of mild.</br>" +
                 "She tends not to appreciate days like today anymore. Her world is constantly dampened by dark, ominous clouds.</br></br>" +
 
-                "Sara suffers from major depression disorder. Her doctors diagnosed her recently, but she knew it the be the truth for the majority of her cognitive years.</br>" +
+                "Sara suffers from major depression disorder. Her doctor diagnosed her recently, but she knew it had been her truth for the majority of her cognitive years.</br>" +
                 "Oftentimes she thinks about how hard she fought it when she was younger.</br>" +
                 "She is completely aware that she doesn't try to compete with it anymore. She is outmatched. Some days she almost embraces it.</br></br>"+
 
@@ -184,7 +183,7 @@ public class TextDetectiveController {
 
             case "look around":
                 response = "Sara looks around. She is standing on the sidewalk in an average Oakland neighborhood.</br>" +
-                        "It's the early afternoon on a Tuesday, most of the driveways are empty.</br> " +
+                        "It's the early afternoon on a Tuesday. Most of the driveways are empty.</br> " +
                         "The normal folk who live here are at work.</br>" +
                         "All of the houses are rather plain looking, every nth house or so are seemingly identical.</br>"+
                         "The uninteresting house closest to her, she knows to be empty. Her cruiser is parked in the driveway.</br>" +

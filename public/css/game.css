@@ -27,10 +27,10 @@ tr:nth-child(even) {
     color: #99FFFF;
     background-color: inherit;
     text-align: left;
-    font-weight: bold;
+    font-weight: normal;
     height: 27px;
     width: 80%;
-    font-size: 17px;
+    font-size: 20px;
     margin-bottom: 15px;
     margin-left: 6px;
 }

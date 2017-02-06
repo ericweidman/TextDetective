@@ -34,10 +34,11 @@ function newUser(user) {
         error: function(error) {
             console.log("Add User", error);
             console.log(user);
+            document.getElementById('h3').innerHTML = "It seems you are having network issues.";
         },
         statusCode: {
             500: function() {
-                document.getElementById('h3').innerHTML = "Username in use please select another.";
+                document.getElementById('h3').innerHTML = "Username in use. Please select another.";
             }
         }
     });

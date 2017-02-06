@@ -1,4 +1,5 @@
 body {
+    font-weight: normal;
     white-space: nowrap;
     font-size: 18px;
     color: white;
@@ -17,13 +18,13 @@ input {
     text-align: center;
     height: 27px;
     width: 130;
-    font-size: 17px;
+    font-size: 18px;
 }
 
 button {
     background-color: inherit;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 18px;
     width: 200px;
     height: 30px;
     cursor: pointer;
@@ -32,7 +33,7 @@ button {
 
 #center {
     position: absolute;
-    width: 510px;
+    width: 700px;
     height: 380px;
     background-color: inherit;
     top: 0;
@@ -43,16 +44,19 @@ button {
 }
 
 h1 {
-    font-size: 35px;
-    padding-bottom: 20px;
+    font-size: 45px;
+    padding-bottom: 15px;
+    font-weight: normal;
 }
 
 h2 {
-    font-size: 17px;
+    font-size: 20px;
+    font-weight: normal;
 }
 
 #h3{
-  font-size: 17px;
+  font-size: 20px;
   padding-top: 10px;
-  font-weight: bold;
+  font-weight: normal;
+  font-family: 'Roboto Slab', serif;
 }
