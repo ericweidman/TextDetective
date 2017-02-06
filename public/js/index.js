@@ -20,9 +20,9 @@ function newUser(user) {
         success: function(data) {
             $('#newUser').addClass('animated fadeOut');
             setTimeout(function() {
-              $('#move').animate({
-                  'marginTop': '+=150px'
-              }, 2000);
+                $('#move').animate({
+                    'marginTop': '+=150px'
+                }, 2000);
             }, 750)
             setTimeout(function() {
                 $('#move').addClass('animated fadeOut');
@@ -34,7 +34,11 @@ function newUser(user) {
         error: function(error) {
             console.log("Add User", error);
             console.log(user);
-            alert('Username taken.')
+        },
+        statusCode: {
+            500: function() {
+                document.getElementById('h3').innerHTML = "Username in use please select another.";
+            }
         }
     });
 }
@@ -45,4 +49,8 @@ $('#newUser').submit(function(event) {
     user.userName = $('input[name=userName]').val();
     user.pin = $('input[name=pin]').val();
     newUser(user);
+});
+
+$.ajax({
+
 });

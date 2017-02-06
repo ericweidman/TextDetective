@@ -64,7 +64,7 @@ function userAction(action) {
 
 $('#userAction').submit(function(event) {
     event.preventDefault();
-    var fewSeconds = 1;
+    var fewSeconds = 2.5;
     var action = $('input[name=userAction]').val();
     var table = document.getElementById("gameText");
     var row = table.insertRow(-1);

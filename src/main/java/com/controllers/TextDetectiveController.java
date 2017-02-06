@@ -35,7 +35,7 @@ public class TextDetectiveController {
             System.out.println("User " + newUser.getUserName().toLowerCase() + " created!");
             System.out.println("User count is now " + userCount + "!");
         } else if (newUser.getUserName().toLowerCase().equals(checkUser.getUserName()) && !newUser.getPin().equals(checkUser.getPin())) {
-            throw new Exception("Invalid PIN");
+            throw new Exception("Username already in use");
         } else if (newUser.getUserName().toLowerCase().equals(checkUser.getUserName()) && newUser.getPin().equals(checkUser.getPin())) {
             session.setAttribute("username", checkUser.getUserName().toLowerCase());
         } else {
@@ -127,7 +127,7 @@ public class TextDetectiveController {
             case "about detective sara":
                 response = "You are currently logged in as " + userName + ".</br>" +
                         "---</br>" +
-                        "Detective Sara was created by Eric Weidman.</br>" +
+                        "Detective Sara was programmed and written by Eric Weidman.</br>" +
                         "If you're reading this, thank you for playing!</br>" +
                         "If you have any questions/comments/feedback/criticisms/devjobs,</br>" +
                         "I would love to hear from you! Shoot me an email - ericweidman@gmail.com.</br>" +
