@@ -1,4 +1,3 @@
-
 $(document).ready(function() {
     $('body').addClass('animated fadeIn');
 });
@@ -19,11 +18,15 @@ function newUser(user) {
         data: JSON.stringify(user),
         dataType: 'text',
         success: function(data) {
-            $('#f1').addClass('animated fadeOut');
-             $("#move").animate({bottom: '-=185px'}, 2000);
-          setTimeout(function() {
-              $('#move').addClass('animated fadeOut');
-          }, 4000)
+            $('#newUser').addClass('animated fadeOut');
+            setTimeout(function() {
+              $('#move').animate({
+                  'marginTop': '+=150px'
+              }, 2000);
+            }, 500)
+            setTimeout(function() {
+                $('#move').addClass('animated fadeOut');
+            }, 4500)
             setTimeout(function() {
                 window.location.href = "game.html"
             }, 5000)

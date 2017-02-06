@@ -5,23 +5,20 @@
     <link rel="stylesheet" href="css/index.css" media="screen" charset="utf-8">
     <link href="https://fonts.googleapis.com/css?family=Roboto+Slab" rel="stylesheet">
     <link rel="stylesheet" href="css/animate.css">
-
     <title>Detective Sara</title>
 </head>
 
 <body>
-
-    <div id="move">DETECTIVE SARA</div>
-
-    <div id="f1">
-    <form id="newUser" class="center">
-        <input class="userName" type="text" required name="userName" placeholder="Username" pattern="[A-Za-z]{6,25}" autocomplete="off" title="No spaces, Letters only. 6-25 characters."
-        autofocus="autofoucs">
-        <h1>Enter a username to save your game.</h1>
-        <input class="pin" type="password" required name="pin" placeholder="PIN#" maxlength="4" pattern="[0-9]{4}" title="Four digits only. i.e. 0000. Probably don't use that." autocomplete="off">
-        <h2>Enter a 4 digit pin. Please do not use a sensitive personal PIN.</h2>
-        <button class="login" type="submit" name="login">Start/Resume</button>
-      </div>
+    <div id='center'>
+        <div id='move'>
+            <h1>DETECTIVE SARA</h1></div>
+        <form id="newUser">
+            <input class="userName" type="text" required name="userName" placeholder="username" pattern="[A-Za-z]{6,25}" autocomplete="off" title="No spaces, Letters only. 6-25 characters." autofocus="autofoucs">
+            <h2>Enter a username to save your game.</h2>
+            <input class="pin" type="password" required name="pin" placeholder="PIN#" maxlength="4" pattern="[0-9]{4}" title="Four digits only. i.e. 0000. Probably don't use that." autocomplete="off">
+            <h2>Enter a 4 digit pin. Please do not use a sensitive personal PIN.</h2>
+            <button class="login" type="submit" name="login">Start/Resume</button>
+    </div>
     </form>
 </body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>

@@ -1,63 +1,18 @@
-.center {
-  position: absolute;
-    width: 500px;
-    height: 50px;
-    top: 50%;
-    left: 46%;
-    margin-left: -65px;
-    margin-top: -25px;
-}
-
 body {
+    white-space: nowrap;
+    font-size: 18px;
+    color: white;
+    text-align: center;
     overflow: hidden;
     background-color: black;
     color: white;
     font-family: 'Roboto Slab', serif;
 }
 
-h1 {
-    text-align: left;
-    font-size: 100%;
-    margin-left: -32px;
-}
-
-h2 {
-    text-align: left;
-    font-size: 100%;
-    margin-left: -121px;
-    !important
-}
-
-#move {
-    white-space: nowrap;
-    width: 100px;
-    height: 100px;
-    position: absolute;
-    top: 0;
-    bottom: 100px;
-    left: 0;
-    right: 375px;
-    margin: auto;
-    text-align: left;
-    font-size: 300%;
-
-}
-
-.login {
-    background-color: inherit;
+input {
     color: white;
-    font-weight: bold;
-    font-size: 17px;
-    margin-left: 10px;
-    !important height: 300px;
-    width: 200px;
-    height: 30px;
-}
-
-.userName {
-  color: white;
-  background-color: inherit;
-  outline: none;
+    background-color: inherit;
+    outline: none;
     font-weight: bold;
     text-align: center;
     height: 27px;
@@ -65,13 +20,35 @@ h2 {
     font-size: 17px;
 }
 
-.pin {
-  color: white;
-  background-color: inherit;
-  outline: none;
-  font-weight: bold;
-  text-align: center;
-    height: 27px;
-    width: 130;
+button {
+    background-color: inherit;
+    font-weight: bold;
     font-size: 17px;
+    width: 200px;
+    height: 30px;
+    cursor: pointer;
+    color: white;
+}
+
+#center {
+    position: absolute;
+    width: 510px;
+    height: 380px;
+    background-color: inherit;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 70px;
+    margin: auto;
+}
+
+h1 {
+    font-size: 35px;
+}
+
+h2 {
+    font-size: 17px;
+}
+#move{
+  
 }
