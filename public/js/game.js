@@ -1,5 +1,7 @@
 $(document).ready(function() {
-    $('body').addClass('animated fadeIn');
+              setTimeout(function() {
+        $('#fixedfooter').addClass('animated fadeIn');
+    }, 5000);
     $.ajax({
         url: '/intro',
         method: "GET",

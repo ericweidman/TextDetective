@@ -23,13 +23,13 @@ function newUser(user) {
               $('#move').animate({
                   'marginTop': '+=150px'
               }, 2000);
-            }, 500)
+            }, 750)
             setTimeout(function() {
                 $('#move').addClass('animated fadeOut');
             }, 4500)
             setTimeout(function() {
                 window.location.href = "game.html"
-            }, 5000)
+            }, 6500)
         },
         error: function(error) {
             console.log("Add User", error);

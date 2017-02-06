@@ -1,5 +1,5 @@
 body {
-    overflow-y: scroll;
+    overflow: hidden;
     background-color: black;
     color: white;
     font-family: 'Roboto Slab', serif;
@@ -7,10 +7,24 @@ body {
     font-size: 20px;
 }
 
+button {
+    background-color: inherit;
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+    margin-left: 10px;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+}
+
+tr:nth-child(even) {
+    color: #99FFFF;
+}
 
 #userAction {
     outline: none;
-    color: white;
+    color: #99FFFF;
     background-color: inherit;
     text-align: left;
     font-weight: bold;
@@ -18,17 +32,7 @@ body {
     width: 80%;
     font-size: 17px;
     margin-bottom: 15px;
-}
-
-.submitAction {
-    background-color: inherit;
-    color: white;
-    font-weight: bold;
-    font-size: 17px;
-    margin-left: 10px;
-    width: 200px;
-    height: 30px;
-    cursor: pointer;
+    margin-left: 6px;
 }
 
 #fixedfooter {
@@ -38,15 +42,20 @@ body {
     left: 0px;
     width: 100%;
     color: white;
-    background-color: inherit;;
+    background-color: inherit;
     padding: 25px;
-
+    visibility: hidden;
+    animation-duration: 6s;
 }
 
-#gameText{
-  overflow-y: scroll;
-  position: absolute;
-  margin-left: 30px;
-  width: 95%;
-  bottom: 10%;
+#gameText {
+    overflow-y: scroll;
+    position: absolute;
+    margin-left: 30px;
+    width: 95%;
+    bottom: 10%;
+}
+
+.animated {
+    visibility: visible !important;
 }
