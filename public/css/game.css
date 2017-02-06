@@ -45,7 +45,7 @@ tr:nth-child(even) {
     background-color: inherit;
     padding: 25px;
     visibility: hidden;
-    animation-duration: 6s;
+    animation-duration: 4s;
 }
 
 #gameText {

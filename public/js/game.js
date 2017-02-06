@@ -64,10 +64,15 @@ function userAction(action) {
 
 $('#userAction').submit(function(event) {
     event.preventDefault();
+    var fewSeconds = 1;
     var action = $('input[name=userAction]').val();
     var table = document.getElementById("gameText");
     var row = table.insertRow(-1);
     row.innerHTML = '<p>' + action + '</p>';
     userAction(action);
     this.reset();
+    document.getElementById('submitAction').disabled = true;
+       setTimeout(function(){
+         document.getElementById('submitAction').disabled = false;
+     }, fewSeconds*1000);
 });
