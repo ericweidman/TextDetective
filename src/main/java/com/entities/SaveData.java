@@ -22,10 +22,21 @@ public class SaveData {
     private
     String items;
 
+    @Column(nullable = false)
+    private
+    Boolean hasFinished = false;
+
     @OneToOne
     private
     User user;
 
+    public SaveData(int id, String location, String items, Boolean hasFinished, User user) {
+        this.id = id;
+        this.location = location;
+        this.items = items;
+        this.hasFinished = hasFinished;
+        this.user = user;
+    }
 
     public SaveData(int id, String location, String items, User user) {
         this.id = id;
@@ -38,6 +49,17 @@ public class SaveData {
         return items;
     }
 
+    public SaveData(Boolean hasFinished) {
+        this.hasFinished = hasFinished;
+    }
+
+    public Boolean getHasFinished() {
+        return hasFinished;
+    }
+
+    public void setHasFinished(Boolean hasFinished) {
+        this.hasFinished = hasFinished;
+    }
 
     public SaveData(String location, String items) {
         this.location = location;

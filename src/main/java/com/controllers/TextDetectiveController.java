@@ -20,6 +20,8 @@ import java.util.List;
  */
 @RestController
 public class TextDetectiveController {
+
+
     @Autowired
     UserRepository users;
 
@@ -53,7 +55,6 @@ public class TextDetectiveController {
         } else {
             session.setAttribute("username", newUser.getUserName().toLowerCase());
             users.save(saveUser);
-
         }
     }
 
@@ -67,14 +68,14 @@ public class TextDetectiveController {
 
 
         if (isAdmin) {
-            loadGame = new SaveData(checkIfNew.getId(), "Admin lounge", "Admin Tools", checkIfNew);
+            loadGame = new SaveData(checkIfNew.getId(), "Admin lounge", "Admin Tools", true, checkIfNew);
             saveData.save(loadGame);
-            return "Welcome to the admin tools!</br>" +
+            return "Welcome to the admin lounge!</br>" +
                     "Enter \"tools\" to see a list of unique Admin features.";
         } else {
 
             if (loadGame == null) {
-                loadGame = new SaveData(checkIfNew.getId(), "sidewalk", "Sara has a keyring.</br>", checkIfNew);
+                loadGame = new SaveData(checkIfNew.getId(), "sidewalk", "Sara has a keyring.</br>", false, checkIfNew);
                 saveData.save(loadGame);
             }
 
@@ -126,7 +127,6 @@ public class TextDetectiveController {
         String action = userAction.toLowerCase();
         String response;
         String adminResponse;
-
         assert session != null;
         String userSessionName = (String) session.getAttribute("username");
         User user = users.findByUserName(userSessionName);
@@ -135,13 +135,30 @@ public class TextDetectiveController {
         String currentLocation = userData.getLocation();
         String currentItems = userData.getItems();
         Boolean isAdmin = user.getAdmin();
+        int number = 0;
 
         if (isAdmin) {
+
             switch (action) {
+
+                case "commands":
+                case "tools":
+                case "help":
+                case "admin tools":
+                case "admin":
+
+                    adminResponse = "---<br></br>" +
+                            "\"user count\" - Will display how many unique are in the database.</br>" +
+                            "\"list users\" - Will display a list of all users.</br>" +
+                            "\"list admins\" - Will display a list of admins.</br>" +
+                            "\"completed\" - Will display the number of accounts have competed the game.</br>" +
+                            "---</br></br>";
+                    break;
 
 
                 case "unique users":
                 case "user count":
+                case "count":
                     long countUsers = users.count();
                     String usersCount = Long.toString(countUsers);
                     adminResponse = "There are " + usersCount + " users currently in the database.";
@@ -150,12 +167,39 @@ public class TextDetectiveController {
                 case "user list":
                 case "list users":
                 case "users":
+                    String another = "";
                     List<User> allUsers = (List<User>) users.findAll();
-                    adminResponse = "";
                     for (User eachUser : allUsers) {
-                        adminResponse += "- " + eachUser.getUserName() + " ";
+                        another += "- " + eachUser.getUserName() + " ";
                     }
+                    adminResponse = another;
+                    break;
 
+                case "admins":
+                case "list admins":
+                    String diff = "";
+                    List<User> allAdmins = (List<User>) users.findAll();
+                    for (User everyAdmin : allAdmins) {
+                        if (everyAdmin.getAdmin()) {
+                            diff += "- " + everyAdmin.getUserName() + " ";
+                        }
+                    }
+                    adminResponse = diff;
+                    break;
+
+                case "complete":
+                case "completed":
+                case "times finished":
+                case "finished":
+
+                    List<SaveData> allSaveData = (List<SaveData>) saveData.findAll();
+
+                    for (SaveData finished : allSaveData) {
+                        if (finished.getHasFinished()) {
+                            number++;
+                        }
+                    }
+                    adminResponse = "Detective Sara has been completed by " + Integer.toString(number) + " users.";
                     break;
 
                 default:
