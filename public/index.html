@@ -13,10 +13,10 @@
         <div id='move'>
             <h1>DETECTIVE SARA</h1></div>
         <form id="newUser">
-            <input class="userName" type="text" required name="userName" placeholder="username" pattern="[A-Za-z]{6,25}" autocomplete="off" title="No spaces, Letters only. 6-25 characters." autofocus="autofoucs">
-            <h2>Enter a username to save your game.</h2>
-            <input class="pin" type="password" required name="pin" placeholder="PIN#" maxlength="4" pattern="[0-9]{4}" title="Four digits only. i.e. 0000. Probably don't use that." autocomplete="off">
-            <h2>Enter a 4 digit pin. Please do not use a sensitive personal PIN.</h2>
+            <input class="userName" type="text" required name="userName" placeholder="username" pattern="[A-Za-z]{4,18}" autocomplete="off" title="No spaces, Letters only. 4-18 characters." autofocus="autofoucs">
+            <h2>Enter a username.</h2>
+            <input class="pin" type="password" required name="pin" placeholder="PIN#" maxlength="6" pattern="[0-9]{6}" title="Six digits only. e.g. 000000. Probably don't use that." autocomplete="off">
+            <h2>Enter a 6 digit pin.</h2>
             <button class="login" type="submit" name="login">Start/Resume</button>
             <div id="h3"></div>
     </div>

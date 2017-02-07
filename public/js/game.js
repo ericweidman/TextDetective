@@ -22,16 +22,19 @@ $(document).ready(function() {
 
 var jscon = {
     urls: {
-        savegame: '/save-game',
         userAction: '/user-action'
     }
 };
 
 function userAction(action) {
-    if (action === 'save') {
+    if (action === 'save'|| action === 'exit' || action === 'logout'
+   || action === 'savegame' || action === 'save game' || action === 'quit') {
         $.ajax({
-            url: jscon.urls.savegame,
+            url: jscon.urls.userAction,
             method: "POST",
+            contentType: 'application/json; charset=utf-8',
+            data: action,
+            dataType: 'text',
             success: function(data) {
                 $('body').addClass('animated fadeOut');
                 setTimeout(function() {
@@ -40,11 +43,10 @@ function userAction(action) {
             },
             error: function(error) {
                 console.log(error);
-                alert("Fail!");
+                alert('This fail');
             }
         });
     }
-
     $.ajax({
         url: jscon.urls.userAction,
         method: "POST",

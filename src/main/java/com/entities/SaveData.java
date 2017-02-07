@@ -14,7 +14,7 @@ public class SaveData {
     private
     int id = 1;
 
-    @Column
+    @Column(nullable = false)
     private
     String location;
 

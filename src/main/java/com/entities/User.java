@@ -15,15 +15,39 @@ public class User {
     private
     String userName;
 
-    @Column
+    @Column(nullable = false)
     private
     String pin;
+
+    @Column(nullable = false)
+    private
+    Boolean isAdmin = false;
 
     public int getId() {
         return id;
     }
 
 
+    public User(int id, String userName, String pin, Boolean isAdmin) {
+        this.id = id;
+        this.userName = userName;
+        this.pin = pin;
+        this.isAdmin = isAdmin;
+    }
+
+    public User(String userName, String pin, Boolean isAdmin) {
+        this.userName = userName;
+        this.pin = pin;
+        this.isAdmin = isAdmin;
+    }
+
+    public Boolean getAdmin() {
+        return isAdmin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        isAdmin = admin;
+    }
 
     public User(int id, String userName, String pin) {
         this.id = id;
