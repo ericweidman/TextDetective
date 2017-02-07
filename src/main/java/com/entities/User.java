@@ -15,9 +15,15 @@ public class User {
     private
     String userName;
 
-    @Column(nullable = false)
+    @Column
     private
     String pin;
+
+    public int getId() {
+        return id;
+    }
+
+
 
     public User(int id, String userName, String pin) {
         this.id = id;

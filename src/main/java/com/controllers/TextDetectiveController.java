@@ -1,6 +1,9 @@
 package com.controllers;
 
+
+import com.entities.SaveData;
 import com.entities.User;
+import com.services.SaveDataRepository;
 import com.services.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -9,16 +12,19 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by ericweidman on 2/3/17.
  */
 @RestController
 public class TextDetectiveController {
-
-
     @Autowired
     UserRepository users;
+
+    @Autowired
+    SaveDataRepository saveData;
 
     @RequestMapping(path = "/create-user", method = RequestMethod.POST)
     public void newUser(@RequestBody User newUser, HttpSession session) throws Exception {
@@ -41,21 +47,24 @@ public class TextDetectiveController {
         } else {
             session.setAttribute("username", newUser.getUserName().toLowerCase());
             users.save(saveUser);
+
         }
-    }
-
-    @RequestMapping(path = "/save-game", method = RequestMethod.POST)
-    public void save(HttpSession session) {
-        session.invalidate();
-
     }
 
     @RequestMapping(path = "/intro", method = RequestMethod.GET)
     public String intro(HttpSession session) {
 
+        String sessionUser = (String) session.getAttribute("username");
+        User checkIfNew = users.findByUserName(sessionUser);
+        SaveData loadGame = saveData.findByUserId(checkIfNew.getId());
+
+        if(loadGame == null){
+            loadGame = new SaveData(checkIfNew.getId(), "sidewalk", "Sara has a keyring.</br>", checkIfNew);
+            saveData.save(loadGame);
+        }
+
         String brian = (String) session.getAttribute("username");
         String isBrian = brian.toLowerCase();
-
         String hiBrian = "Hi Brian! I suspect you might be one of the only people who plays this.</br>" +
                 "I wrote this switch statement specifically just to say thanks.</br>" +
                 "So, Thanks!</br>" +
@@ -69,7 +78,7 @@ public class TextDetectiveController {
                 "Oftentimes she thinks about how hard she would fight it when she was younger. Sometimes she wonders what changed.</br>" +
                 "She is completely aware that she doesn't try to compete with it anymore. She's been outmatched for months.</br> " +
                 "Some days she refuses to grapple her depression, and instead embraces it.</br>" +
-                "Today is one of those days.</br></br>"+
+                "Today is one of those days.</br></br>" +
 
                 "She is at this particular house because she has her job to do. The same job she's been doing for years.</br>" +
                 "She is a detective for the Oakland City Police Department.</br></br>" +
@@ -97,13 +106,23 @@ public class TextDetectiveController {
 
     @RequestMapping(path = "/user-action", method = RequestMethod.POST)
     public String userAction(@RequestBody String userAction, HttpSession session) {
-
-        String userName = (String) session.getAttribute("username");
         String action = userAction.toLowerCase();
         String response;
-        boolean frontDoor = false;
+
+        assert session != null;
+        String userSessionName = (String) session.getAttribute("username");
+        User user = users.findByUserName(userSessionName);
+        int userId = user.getId();
+        SaveData userData = saveData.findByUserId(user.getId());
+        String currentLocation = userData.getLocation();
+        String currentItems = userData.getItems();
+
 
         switch (action) {
+            case "location":
+                response = "Sara is currently at the " + currentLocation;
+                break;
+
             case "help":
             case "halp":
             case "wtf":
@@ -126,7 +145,7 @@ public class TextDetectiveController {
             case "about":
             case "detective sara":
             case "about detective sara":
-                response = "You are currently logged in as " + userName + ".</br>" +
+                response = "You are currently logged in as " + userSessionName + ".</br>" +
                         "---</br>" +
                         "'Detective Sara' was programmed and written by Eric Weidman.</br>" +
                         "If you have any questions/comments/feedback/criticisms/devjobs I would love to hear form you!</br>" +
@@ -153,12 +172,20 @@ public class TextDetectiveController {
                 response = "Sara considers hurting herself. She thinks there will be plenty of time for self loathing later.";
                 break;
 
+            case "pickup rock":
+                currentItems = currentItems + "Sara has a small rock.</br>";
+                saveItems(userId, currentLocation, currentItems, user);
+                response = "Sara sees a small rock on the ground. She picks it up and pockets it.";
+                break;
+
             case "inspect inventory":
             case "open inventory":
             case "item":
             case "inventory":
             case "items":
-                response = "Sara has a keyring.";
+
+                saveItems(userId, currentLocation, currentItems, user);
+                response = currentItems;
                 break;
 
             case "inspect keyring":
@@ -189,7 +216,7 @@ public class TextDetectiveController {
                 response = "Sara looks around. She is standing on the sidewalk in an average Oakland neighborhood.</br>" +
                         "It's the early afternoon on a Tuesday. Most of the driveways are empty.</br> " +
                         "The normal folk who live here are at work.</br>" +
-                        "All of the houses are rather plain looking. Every nth house or so is seemingly identical.</br>"+
+                        "All of the houses are rather plain looking. Every nth house or so is seemingly identical.</br>" +
                         "The uninteresting house closest to her, she suspects to be empty. Her cruiser is parked in the driveway.</br>" +
                         "What's left of her sense of duty pushes her to the front door.";
                 break;
@@ -239,6 +266,7 @@ public class TextDetectiveController {
             case "go to front door":
             case "move to front door":
             case "walk to front door":
+
                 response = "As Sara walks towards the door, she starts to think about Johnathan Mercer.</br>" +
                         "Johnathan suffocated himself earlier this morning during his latest stint in a city jail cell.</br>" +
                         "Apparently somebody had forgotten to remove his belt before locking him up for the night.</br>" +
@@ -255,8 +283,13 @@ public class TextDetectiveController {
                         " the long list of her coworkers fuck-ups.</br>" +
                         "She dislikes everyone at her precinct.</br></br>" +
 
-                        "Her final thought concerning Johnathan before reaching the door was \"lucky bastard...\"</br>"+
+                        "Her final thought concerning Johnathan before reaching the door was \"lucky bastard...\"</br>" +
                         "She chuckled to herself.";
+
+
+                currentLocation = "front door";
+                saveLocation(userId, currentLocation, currentItems, user);
+
                 break;
 
             case "overwatch":
@@ -282,13 +315,43 @@ public class TextDetectiveController {
 
             case "what is my username":
             case "username":
-                response = "Your username is " + userName + ".";
+                response = "Your username is " + userSessionName + ".";
+                break;
+
+            case "walk to sidewalk":
+            case "move to sidewalk":
+            case "go back to the sidewalk":
+            case "sidewalk":
+            case "walk to the sidewalk":
+            case "move to the sidewalk":
+
+                currentLocation = "sidewalk";
+                saveLocation(userId, currentLocation, currentItems, user);
+
+                response = "Sara walks back to the sidewalk";
                 break;
 
             default:
                 response = "Unrecognized command.";
                 break;
         }
+
         return response;
+    }
+
+    private void saveLocation(int userId, String location, String items, User user) {
+        SaveData changeData = new SaveData();
+        changeData.setId(userId);
+        changeData.setLocation(location);
+        changeData.setUser(user);
+        saveData.save(changeData);
+    }
+
+    private void saveItems(int userId, String location, String items, User user){
+        SaveData changeData = new SaveData();
+        changeData.setId(userId);
+        changeData.setItems(items);
+        changeData.setUser(user);
+        saveData.save(changeData);
     }
 }
