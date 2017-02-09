@@ -19,18 +19,12 @@ public class Intro {
     @Autowired
     SaveDataRepository saveData;
 
-    public Intro(String returnString) {
-        this.returnString = returnString;
-    }
-
-    public Intro() {
-    }
-
+    public Intro() {}
     public String getReturnString() {
         return returnString;
     }
-
     private String returnString;
+
 
     public String intro(HttpSession session) {
 
