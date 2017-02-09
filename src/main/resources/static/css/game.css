@@ -1,0 +1,61 @@
+body {
+    overflow: hidden;
+    background-color: black;
+    color: white;
+    font-family: 'Roboto Slab', serif;
+    font-weight: normal;
+    font-size: 20px;
+}
+
+button {
+    background-color: inherit;
+    color: white;
+    font-weight: bold;
+    font-size: 17px;
+    margin-left: 10px;
+    width: 100px;
+    height: 30px;
+    cursor: pointer;
+}
+
+tr:nth-child(even) {
+    color: #99FFFF;
+}
+
+#userAction {
+    outline: none;
+    color: #99FFFF;
+    background-color: inherit;
+    text-align: left;
+    font-weight: normal;
+    height: 27px;
+    width: 80%;
+    font-size: 20px;
+    margin-bottom: 15px;
+    margin-left: 6px;
+}
+
+#fixedfooter {
+    position: absolute;
+    text-align: center;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    color: white;
+    background-color: inherit;
+    padding: 25px;
+    visibility: hidden;
+    animation-duration: 4s;
+}
+
+#gameText {
+    overflow-y: scroll;
+    position: absolute;
+    margin-left: 30px;
+    width: 95%;
+    bottom: 10%;
+}
+
+.animated {
+    visibility: visible !important;
+}
