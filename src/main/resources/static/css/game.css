@@ -1,5 +1,5 @@
 body {
-    overflow: hidden;
+  overflow: hidden;
     background-color: black;
     color: white;
     font-family: 'Roboto Slab', serif;
@@ -43,17 +43,30 @@ tr:nth-child(even) {
     width: 100%;
     color: white;
     background-color: inherit;
-    padding: 25px;
+    padding-top: 1px;
+    padding-left: 28px;
+    padding-bottom: 30px;
     visibility: hidden;
     animation-duration: 4s;
 }
 
 #gameText {
+    padding-top: 10px;
+    height: 90%;
+    background-color: black;
     overflow-y: scroll;
     position: absolute;
     margin-left: 30px;
-    width: 95%;
+    width: 100%;
     bottom: 10%;
+    display: block;
+
+}
+
+#parent {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
 }
 
 .animated {

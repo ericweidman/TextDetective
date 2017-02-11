@@ -10,7 +10,7 @@ $(document).ready(function() {
             setTimeout(function() {
                 var table = document.getElementById("gameText");
                 var row = table.insertRow(-1);
-                row.innerHTML = intro;
+                row.innerHTML = '<p>' + intro + '</p>';
                 $(row).addClass('animated fadeIn');
             }, 2000);
         },
@@ -57,7 +57,9 @@ function userAction(action) {
             setTimeout(function() {
                 var table = document.getElementById("gameText");
                 var row = table.insertRow(-1);
-                row.innerHTML = response;
+                row.innerHTML = '<p>' + response + '</p>';
+                var gameText = document.getElementById('gameText');
+                gameText.scrollTop = gameText.scrollHeight;
                 $(row).addClass('animated fadeIn');
             }, 1000);
         },
@@ -71,6 +73,8 @@ $('#userAction').submit(function(event) {
     var table = document.getElementById("gameText");
     var row = table.insertRow(-1);
     row.innerHTML = '<p>' + action + '</p>';
+    var gameText = document.getElementById('gameText');
+    gameText.scrollTop = gameText.scrollHeight;
     userAction(action);
     this.reset();
     document.getElementById('submitAction').disabled = true;
