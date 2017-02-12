@@ -122,7 +122,6 @@ public class TextDetectiveController {
         return returnString;
     }
 
-
     @RequestMapping(path = "/user-action", method = RequestMethod.POST)
     public String userAction(@RequestBody String userAction, HttpSession session) {
         String action = userAction.toLowerCase();
