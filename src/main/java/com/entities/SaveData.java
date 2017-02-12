@@ -26,11 +26,50 @@ public class SaveData {
     private
     Boolean hasFinished = false;
 
+    @Column
+    private
+    Boolean hasSeenIntro = false;
+
+    @Column
+    private
+    Boolean hasSeenFrontDoor = false;
+
+    @Column
+    private
+    Boolean frontDoorUnlocked = false;
+
     @OneToOne
     private
     User user;
 
-    public SaveData(int id, String location, String items, Boolean hasFinished, User user) {
+    public Boolean getFrontDoorUnlocked() {
+        return frontDoorUnlocked;
+    }
+
+    public void setFrontDoorUnlocked(Boolean frontDoorUnlocked) {
+        this.frontDoorUnlocked = frontDoorUnlocked;
+    }
+
+    public Boolean getHasSeenFrontDoor() {
+        return hasSeenFrontDoor;
+    }
+
+    public void setHasSeenFrontDoor(Boolean hasSeenFrontDoor) {
+        this.hasSeenFrontDoor = hasSeenFrontDoor;
+    }
+
+    public Boolean getHasSeenIntro() {
+        return hasSeenIntro;
+    }
+
+    public void setHasSeenIntro(Boolean hasSeenIntro) {
+        this.hasSeenIntro = hasSeenIntro;
+    }
+
+    public SaveData(int id, String location, String items, Boolean hasFinished, Boolean hasSeenIntro, Boolean hasSeenFrontDoor, Boolean frontDoorUnlocked, User user) {
+        this.frontDoorUnlocked = frontDoorUnlocked;
+        this.hasSeenIntro = hasSeenIntro;
+        this.hasSeenFrontDoor = hasSeenFrontDoor;
         this.id = id;
         this.location = location;
         this.items = items;

@@ -4,6 +4,7 @@ import com.entities.SaveData;
 import com.entities.User;
 import com.services.SaveDataRepository;
 import com.services.UserRepository;
+import com.utilities.SendMailTLS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,17 +68,13 @@ public class TextDetectiveController {
         String returnString;
 
         if (isAdmin) {
-            loadGame = new SaveData(checkIfNew.getId(), "Admin lounge", "Admin Tools", true, checkIfNew);
+            loadGame = new SaveData(checkIfNew.getId(), "Admin lounge", "Admin Tools", true, true, true, true, checkIfNew);
             saveData.save(loadGame);
             returnString = "Welcome to the admin lounge!</br>" +
                     "Enter \"tools\" to see a list of unique Admin features.";
-        } else {
-
-            if (loadGame == null) {
-                loadGame = new SaveData(checkIfNew.getId(), "sidewalk", "Sara has a keyring.</br>", false, checkIfNew);
-                saveData.save(loadGame);
-            }
-
+        } else if (loadGame == null) {
+            loadGame = new SaveData(checkIfNew.getId(), "sidewalk", "Sara has a keyring.</br>", false, false, false, false, checkIfNew);
+            saveData.save(loadGame);
             returnString = "Sara Berkeley finds herself standing in front of an unremarkable Oakland home.</br>" +
                     "Today is a typical California spring day. The sun is shining, birds are chirping, the air the perfect kind of mild.</br>" +
                     "She tends not to appreciate days like this one anymore. Her world is constantly dampened by dark, ominous clouds.</br></br>" +
@@ -100,28 +97,46 @@ public class TextDetectiveController {
                     "Enter \"commands\" at any time to see a list of useful actions.</br>" +
                     "Your game is saved automatically.</br></br>" +
                     "---</br>";
+            loadGame.setHasSeenIntro(true);
+            saveData.save(loadGame);
 
+        } else {
+            switch (loadGame.getLocation()) {
+                case "sidewalk":
+                    returnString = "Sara is standing on the the sidewalk.</br></br>" +
+                            loadGame.getItems() + "</br>---</br></br>" +
+                            "Enter \"commands\" to see a list of useful commands.";
+                    break;
+                case "front door":
+                    returnString = "Sara is standing at the front door.</br></br>" +
+                            loadGame.getItems() + "</br>---</br></br>" +
+                            "Enter \"commands\" to see a list of useful commands.";
+                    break;
+                default:
+                    returnString = "Sara is standing in the " + loadGame.getLocation() + ".</br></br>" +
+                            loadGame.getItems() + "</br>---</br></br>" +
+                            "Enter \"commands\" to see a list of useful actions.";
+                    break;
+            }
         }
         return returnString;
     }
 
 
-
-
     @RequestMapping(path = "/user-action", method = RequestMethod.POST)
     public String userAction(@RequestBody String userAction, HttpSession session) {
         String action = userAction.toLowerCase();
-        String response;
+        String response = "";
         String adminResponse;
         assert session != null;
         String userSessionName = (String) session.getAttribute("username");
         User user = users.findByUserName(userSessionName);
-        int userId = user.getId();
         SaveData userData = saveData.findByUserId(user.getId());
         String currentLocation = userData.getLocation();
         String currentItems = userData.getItems();
         Boolean isAdmin = user.getAdmin();
         int number = 0;
+
 
         if (isAdmin) {
 
@@ -133,7 +148,7 @@ public class TextDetectiveController {
                 case "admin tools":
                 case "admin":
 
-                    adminResponse = "---<br></br>" +
+                    adminResponse = "---</br></br>" +
                             "\"user count\" - Will display how many unique are in the database.</br>" +
                             "\"list users\" - Will display a list of all users.</br>" +
                             "\"list admins\" - Will display a list of admins.</br>" +
@@ -196,7 +211,23 @@ public class TextDetectiveController {
         } else {
             switch (action) {
                 case "location":
-                    response = "Sara is currently at the " + currentLocation + ".";
+                case "where am i?":
+                case "where is sara?":
+                case "where is sara":
+                case "where am i":
+                case "current location":
+
+                    switch (currentLocation) {
+                        case "sidewalk":
+                            response = "Sara is standing on the the sidewalk.";
+                            break;
+                        case "front door":
+                            response = "Sara is standing at the front door.";
+                            break;
+                        default:
+                            response = "Sara is standing in the " + currentLocation + ".";
+                            break;
+                    }
                     break;
 
                 case "help":
@@ -217,16 +248,6 @@ public class TextDetectiveController {
                                     "---</br>";
                     break;
 
-                case "save":
-                case "exit":
-                case "logout":
-                case "savegame":
-                case "save game":
-                case "quit":
-
-                    response = "Saving...";
-                    break;
-
                 case "about":
                 case "detective sara":
                 case "about detective sara":
@@ -240,44 +261,188 @@ public class TextDetectiveController {
 
                     break;
 
-                case "kill self":
-                case "kill yourself":
-                case "kill sara":
-                case "die":
-                    response = "Sara considers killing herself for brief a moment. She decides now is not the time.";
-                    break;
-
-                case "break arm":
-                case "break leg":
-                case "hurt self":
-                case "cut arm":
-                case "cut leg:":
-                case "cut self":
-                case "punch self":
-                    response = "Sara considers hurting herself. She thinks there will be plenty of time for self loathing later.";
-                    break;
-
-                case "pickup rock":
-                    currentItems = currentItems + "Sara has a small rock.</br>";
-                    saveItems(userId, currentLocation, currentItems, user);
-                    response = "Sara sees a small rock on the ground. She picks it up and pockets it.";
-                    break;
-
-                case "inspect inventory":
-                case "open inventory":
-                case "item":
-                case "inventory":
-                case "items":
-
-                    saveItems(userId, currentLocation, currentItems, user);
-                    response = currentItems;
-                    break;
-
                 case "inspect keyring":
                 case "inspect keys":
                     response = "The keyring she is carrying used to belong to Johnathan Mercer. There are two keys attached.</br>" +
                             "One of the keys looks like any standard key. It probably unlocks a door.</br>" +
                             "The other key has a large fob attached, displaying a FORD logo.";
+                    break;
+
+                case "look around":
+                    switch (currentLocation) {
+                        case "sidewalk":
+                            response = "Sara looks around. She is standing on the sidewalk in an average Oakland neighborhood.</br>" +
+                                    "It's the early afternoon on a Tuesday. Most of the driveways are empty.</br> " +
+                                    "The normal folk who live here are at work.</br>" +
+                                    "All of the houses are rather plain looking. Every nth house or so is seemingly identical.</br>" +
+                                    "The uninteresting house closest to her, she suspects to be empty. Her cruiser is parked in the driveway.</br>" +
+                                    "What's left of her sense of duty pushes her to the front door.";
+                            break;
+                        case "front door":
+                            response = "Sara looks around. She is at the front door.";
+                            break;
+                        case "living room":
+                            response = "Sara looks around. She is standing in the living room";
+                            break;
+                        case "bedroom":
+                            response = "Sara looks around. She is standing in the bedroom";
+                            break;
+                        case "kitchen":
+                            response = "Sara looks around. She is standing in the kitchen";
+                            break;
+                        case "garage":
+                            response = "Sara looks around. She is standing in the garage.";
+                            break;
+                        case "bathroom":
+                            response = "Sara looks around. She is standing in the bathroom";
+                            break;
+                        case "office":
+                            response = "Sara looks around. She is standing in the office";
+                            break;
+                        case "bunker":
+                            response = "Sara looks around. She is standing in a bunker.";
+                            break;
+                    }
+                    break;
+
+                case "walk to the door":
+                case "go to the front door":
+                case "move to the front door":
+                case "walk to the front door":
+                case "go to front door":
+                case "move to front door":
+                case "walk to front door":
+
+                    if (currentLocation.equals("front door")) {
+                        response = "Sara is already at the front door.";
+                    } else if (userData.getHasSeenFrontDoor()) {
+                        response = "Sara walks back to the front door.";
+                        userData.setLocation("front door");
+                        saveData.save(userData);
+                    } else {
+
+                        response = "As Sara walks towards the door, she starts to think about Johnathan Mercer.</br>" +
+                                "Johnathan suffocated himself earlier this morning during his latest stint in a city jail cell.</br>" +
+                                "Apparently somebody had forgotten to remove his belt before locking him up for the night.</br>" +
+                                "He did it shorty after a search warrant for his home had been issued.</br>" +
+                                "The same home Sara was headed to.</br><br>" +
+
+                                "She thought the suicide a bit odd, Johnathan had been in and out the county jail more times than she could remember.</br>" +
+                                "His slimy lawyer normally didn't have any trouble getting him out.</br>" +
+                                "Typically one of her idiot coworkers would forget how to book him properly, or forget to read him his rights,</br>" +
+                                " or beat the ever loving shit out of him before bringing him in.</br></br>" +
+
+                                "Her fellow officers didn't give the suicide a second thought, in fact many of them celebrated it.</br>" +
+                                "While she didn't have any good things to say about Johnathan,</br> she saw no reason to celebrate another addition to" +
+                                " the long list of her coworkers fuck-ups.</br>" +
+                                "She dislikes everyone at her precinct.</br></br>" +
+
+                                "Her final thought concerning Johnathan before reaching the door was \"lucky bastard...\"</br>" +
+                                "She chuckled to herself.";
+
+                        userData.setLocation("front door");
+                        userData.setHasSeenFrontDoor(true);
+                        saveData.save(userData);
+                    }
+                    break;
+
+                case "unlock":
+                    response = "Sara wonders what she should unlock.";
+                    break;
+
+                case "unlock the front door":
+                case "unlock door":
+                case "unlock front door":
+                case "unlock the door":
+
+                    if (currentLocation.equals("front door") && !userData.getFrontDoorUnlocked()) {
+                        response = "Sara takes the keyring from her pocket, and tries one of the keys in lock. She successfully unlocks the front door.";
+                        userData.setFrontDoorUnlocked(true);
+                        saveData.save(userData);
+                    } else if (!currentLocation.equals("front door") && userData.getFrontDoorUnlocked()) {
+                        response = "Sara already unlocked the front door";
+                    } else {
+                        response = "Sara cannot open the front door from where she is standing.";
+                    }
+                    break;
+
+                case "open the front door":
+                case "open door":
+                case "open front door":
+                case "open the door":
+                    if (userData.getFrontDoorUnlocked() && currentLocation.equals("front door")) {
+                        response = "Sara opens the door and steps inside the house.";
+                        userData.setLocation("living room");
+                        saveData.save(userData);
+                    } else if (!userData.getFrontDoorUnlocked() && currentLocation.equals("front door")) {
+                        response = "Sara tries to open the door. It's locked.";
+                    } else {
+                        response = "Sara isn't by the front door.";
+                    }
+                    break;
+
+                case "walk to sidewalk":
+                case "move to sidewalk":
+                case "go back to the sidewalk":
+                case "sidewalk":
+                case "walk to the sidewalk":
+                case "move to the sidewalk":
+
+                    if (currentLocation.equals("sidewalk")) {
+                        response = "Sara is already on the sidewalk.";
+                    } else {
+                        response = "Sara walks to the sidewalk.";
+                        userData.setLocation("sidewalk");
+                        saveData.save(userData);
+                    }
+                    break;
+
+                case "send email":
+                case "send e-mail":
+                case "write e-mail":
+                case "e-mail":
+                case "email":
+                    response = "Who should Sara send an e-mail to?";
+                    break;
+
+                case "this sucks":
+                case "this game sucks":
+                case "sara sucks":
+                case "detective sara sucks":
+                    response = "\"No, you suck.\" Sara suddenly quipped for some reason that even baffled her...";
+                    break;
+
+                case "overwatch":
+                case "overwatch opinions":
+                    response = "Oddly enough Sara starts thinking about some Overwatch truths.</br>" +
+                            "\"Bastion sucks.\"</br>" +
+                            "\"Never do you need a Hanzo AND a Widowmaker.\"</br>" +
+                            "\"Tracer is the best character in the game.\"";
+                    break;
+
+                case "think":
+                case "daydream":
+                case "ponder":
+                    response = "Sara doesn't want to think about things right now. She spends a lot of time avoiding her thoughts.";
+                    break;
+
+                case "what is my username":
+                case "username":
+                    response = "Your username is " + userSessionName + ".";
+                    break;
+
+                case "jump":
+                case "jump up and down":
+                case "jump for joy":
+                    response = "Sara cannot think of any reasons to jump for joy.";
+                    break;
+
+                case "inspect":
+                    response = "Sara wonders what kind of horrors she'll have to inspect today.";
+                    break;
+
+                case "open":
+                    response = "Sara decides she needs something to open, unfortunately she has no ideas.";
                     break;
 
                 case "open keys":
@@ -297,148 +462,55 @@ public class TextDetectiveController {
                     response = "Sara had a sudden urge to throw the keyring, but it eventually passed.";
                     break;
 
-                case "look around":
-                    response = "Sara looks around. She is standing on the sidewalk in an average Oakland neighborhood.</br>" +
-                            "It's the early afternoon on a Tuesday. Most of the driveways are empty.</br> " +
-                            "The normal folk who live here are at work.</br>" +
-                            "All of the houses are rather plain looking. Every nth house or so is seemingly identical.</br>" +
-                            "The uninteresting house closest to her, she suspects to be empty. Her cruiser is parked in the driveway.</br>" +
-                            "What's left of her sense of duty pushes her to the front door.";
+                case "save":
+                case "exit":
+                case "logout":
+                case "savegame":
+                case "save game":
+                case "quit":
+
+                    response = "Saving...";
                     break;
 
-                case "inspect":
-                    response = "Sara wonders what kind of of horrors she'll have to inspect today.";
+                case "kill self":
+                case "kill yourself":
+                case "kill sara":
+                case "die":
+                    response = "Sara considers killing herself for brief a moment. She decides now is not the time.";
                     break;
 
-                case "open":
-                    response = "Sara decides she needs something to open, unfortunately she has no ideas.";
+                case "break arm":
+                case "break leg":
+                case "hurt self":
+                case "cut arm":
+                case "cut leg:":
+                case "cut self":
+                case "punch self":
+                    response = "Sara considers hurting herself. She thinks there will be plenty of time for self loathing later.";
                     break;
 
-                case "open trashcan":
-                    response = "There is not a trashcan nearby for Sara to open.";
+                case "inspect inventory":
+                case "open inventory":
+                case "item":
+                case "inventory":
+                case "items":
+
+                    response = currentItems;
                     break;
 
-                case "inspect trashcan":
-                    response = "There is no trashcan nearby for Sara to inspect.";
-                    break;
-
-
-                case "inspect door":
-                case "inspect front door":
-                    response = "Sara can see the door from here, but from this distance she cannot make out any distinguishing characteristics.";
-                    break;
-
-                case "inspect doorknob":
-                    response = "Sara can hardly see the doorknob from where she is standing.";
-                    break;
-
-                case "open doorknob":
-                case "open door":
-                case "unlock door":
-                    response = "Sara cannot reach the door from where she is standing on the sidewalk, let alone open it.";
-                    break;
-
-                case "jump":
-                case "jump up and down":
-                case "jump for joy":
-                    response = "Sara cannot think of any reasons to jump for joy.";
-                    break;
-
-                case "walk to the door":
-                case "go to the front door":
-                case "move to the front door":
-                case "walk to the front door":
-                case "go to front door":
-                case "move to front door":
-                case "walk to front door":
-
-                    response = "As Sara walks towards the door, she starts to think about Johnathan Mercer.</br>" +
-                            "Johnathan suffocated himself earlier this morning during his latest stint in a city jail cell.</br>" +
-                            "Apparently somebody had forgotten to remove his belt before locking him up for the night.</br>" +
-                            "He did it shorty after a search warrant for his home had been issued.</br>" +
-                            "The same home Sara was headed to.</br><br>" +
-
-                            "She thought the suicide a bit odd, Johnathan had been in and out the county jail more times than she could remember.</br>" +
-                            "His slimy lawyer normally didn't have any trouble getting him out.</br>" +
-                            "Typically one of her idiot coworkers would forget how to book him properly, or forget to read him his rights,</br>" +
-                            " or beat the ever loving shit out of him before bringing him in.</br></br>" +
-
-                            "Her fellow officers didn't give the suicide a second thought, in fact many of them celebrated it.</br>" +
-                            "While she didn't have any good things to say about Johnathan,</br> she saw no reason to celebrate another addition to" +
-                            " the long list of her coworkers fuck-ups.</br>" +
-                            "She dislikes everyone at her precinct.</br></br>" +
-
-                            "Her final thought concerning Johnathan before reaching the door was \"lucky bastard...\"</br>" +
-                            "She chuckled to herself.";
-
-                    currentLocation = "front door";
-                    saveLocation(userId, currentLocation, currentItems, user);
-
-                    break;
-
-                case "overwatch":
-                case "overwatch opinions":
-                    response = "Oddly enough Sara starts thinking about some Overwatch truths.</br>" +
-                            "\"Bastion sucks.\"</br>" +
-                            "\"Never do you need a Hanzo AND a Widowmaker.\"</br>" +
-                            "\"Tracer is the best character in the game.\"";
-                    break;
-
-                case "think":
-                case "daydream":
-                case "ponder":
-                    response = "Sara doesn't want to think about things right now. She spends a lot of time avoiding her thoughts.";
-                    break;
-
-                case "this sucks":
-                case "this game sucks":
-                case "sara sucks":
-                case "detective sara sucks":
-                    response = "\"No, you suck.\" Sara suddenly quipped for some reason that even baffled her...";
-                    break;
-
-                case "what is my username":
-                case "username":
-                    response = "Your username is " + userSessionName + ".";
-                    break;
-
-                case "walk to sidewalk":
-                case "move to sidewalk":
-                case "go back to the sidewalk":
-                case "sidewalk":
-                case "walk to the sidewalk":
-                case "move to the sidewalk":
-
-                    currentLocation = "sidewalk";
-                    saveLocation(userId, currentLocation, currentItems, user);
-
-                    response = "Sara walks to the sidewalk.";
-                    break;
 
                 default:
                     response = "Unrecognized command.";
                     break;
             }
 
+
+            if (action.substring(action.length() - 4, action.length()).equals(".com")) {
+                SendMailTLS.sendMail(action, user.getUserName());
+                response = "Sara composes and sends an e-mail to a friend.";
+            }
+
             return response;
         }
-    }
-
-    private void saveLocation(int userId, String location, String items, User user) {
-        SaveData changeData = new SaveData();
-        changeData.setId(userId);
-        changeData.setLocation(location);
-        changeData.setItems(items);
-        changeData.setUser(user);
-        saveData.save(changeData);
-    }
-
-    private void saveItems(int userId, String location, String items, User user) {
-        SaveData changeData = new SaveData();
-        changeData.setId(userId);
-        changeData.setLocation(location);
-        changeData.setItems(items);
-        changeData.setUser(user);
-        saveData.save(changeData);
     }
 }
