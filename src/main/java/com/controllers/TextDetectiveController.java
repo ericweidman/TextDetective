@@ -278,10 +278,12 @@ public class TextDetectiveController {
                                     "What's left of her sense of duty pushes her to the front door.";
                             break;
                         case "front door":
-                            response = "Sara looks around. She is at the front door.";
+                            response = "Sara looks around. She is standing at the front door of the home of Johnathan Mercer.</br>";
                             break;
                         case "living room":
-                            response = "Sara looks around. She is standing in the living room.";
+                            response =  "Sara looks around.</br>" +
+                                        "She sees a neatly arranged living room with a single sofa pointed at a rather large wall mounted television.</br>" +
+                                        "In front of the sofa is a smallish black wooden coffee table displaying nothing but a smooth black surface.</br>";
                             break;
                         case "bedroom":
                             response = "Sara looks around. She is standing in the bedroom.";
@@ -383,7 +385,15 @@ public class TextDetectiveController {
                 case "open front door":
                 case "open the door":
                     if (userData.getFrontDoorUnlocked() && currentLocation.equals("front door")) {
-                        response = "Sara opens the door and steps inside the house.";
+                        response = "Sara opens the door and steps inside the house. She closes the front door behind herself.</br>" +
+                                    "She sees a neatly arranged living room with a single sofa pointed at a rather large wall mounted television.</br>" +
+                                    "In front of the sofa is a smallish black wooden coffee table displaying nothing but a smooth black surface.</br>" +
+                                    "While the room was rather empty, she noticed that there was a certain elegance to it. It was clean, and made perfect use of its negative space.</br>" +
+                                    "She immediately knew Johnathan had been a minimalist. She resented him for it.</br></br>" +
+                                    "Sara always considered herself a minimalist,  and she hated that she shared anything with Johnathan.</br>" +
+                                    "Even if it was just a preferred choice in aesthetics.</br>" +
+                                    "She wonders if there is a connection between her lack of attachment to personal objects, and Johnathans'.</br>"+
+                                    "She shakes off the thought.";
                         userData.setLocation("living room");
                         saveData.save(userData);
                     } else if (!userData.getFrontDoorUnlocked() && currentLocation.equals("front door")) {
@@ -426,7 +436,7 @@ public class TextDetectiveController {
                 case "this game sucks":
                 case "sara sucks":
                 case "detective sara sucks":
-                    response = "\"No, you suck.\" Sara suddenly quipped for some reason that even baffled her...";
+                    response = "\"No, you suck.\" Sara suddenly quipped for some strange reason. ";
                     break;
 
                 case "overwatch":
