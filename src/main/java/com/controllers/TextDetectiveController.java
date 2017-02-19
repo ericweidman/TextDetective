@@ -281,22 +281,22 @@ public class TextDetectiveController {
                             response = "Sara looks around. She is at the front door.";
                             break;
                         case "living room":
-                            response = "Sara looks around. She is standing in the living room";
+                            response = "Sara looks around. She is standing in the living room.";
                             break;
                         case "bedroom":
-                            response = "Sara looks around. She is standing in the bedroom";
+                            response = "Sara looks around. She is standing in the bedroom.";
                             break;
                         case "kitchen":
-                            response = "Sara looks around. She is standing in the kitchen";
+                            response = "Sara looks around. She is standing in the kitchen.";
                             break;
                         case "garage":
                             response = "Sara looks around. She is standing in the garage.";
                             break;
                         case "bathroom":
-                            response = "Sara looks around. She is standing in the bathroom";
+                            response = "Sara looks around. She is standing in the bathroom.";
                             break;
                         case "office":
-                            response = "Sara looks around. She is standing in the office";
+                            response = "Sara looks around. She is standing in the office.";
                             break;
                         case "bunker":
                             response = "Sara looks around. She is standing in a bunker.";
@@ -347,6 +347,19 @@ public class TextDetectiveController {
 
                 case "unlock":
                     response = "Sara wonders what she should unlock.";
+                    break;
+
+
+                case "walk to the office":
+                case "go to the office":
+                case "open office door":
+                    if(userData.getFrontDoorUnlocked()){
+                        response = "Sara walks into the office.";
+                        userData.setLocation("office");
+                        saveData.save(userData);
+                    }else{
+                        response = "Sara wonders if there is an office inside of the home.";
+                    }
                     break;
 
                 case "unlock the front door":
@@ -401,7 +414,12 @@ public class TextDetectiveController {
                 case "write e-mail":
                 case "e-mail":
                 case "email":
-                    response = "Who should Sara send an e-mail to?";
+                    if(currentLocation.equals("office")){
+                        response = "Who should Sara send an e-mail to?";
+                    }else{
+                        response = "Sara isn't near a device she could send an e-mail from.";
+                    }
+
                     break;
 
                 case "this sucks":
@@ -503,8 +521,7 @@ public class TextDetectiveController {
                     break;
             }
 
-
-            if (action.substring(action.length() - 4, action.length()).equals(".com")) {
+            if (action.substring(action.length() - 4, action.length()).equals(".com") && userData.getLocation().equals("office")) {
                 SendMailTLS.sendMail(action, user.getUserName());
                 response = "Sara composes and sends an e-mail to a friend.";
             }
