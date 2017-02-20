@@ -306,6 +306,30 @@ public class TextDetectiveController {
                     }
                     break;
 
+                case "turn on the television":
+                case "turn on television":
+                case "turn on the tv":
+                case "turn on tv":
+                case "put on the television":
+                case "put on television":
+                case "put on the tv":
+                case "put on tv":
+                    response = "Sara turns on the television. It's tuned to CNN.</br>" +
+                                "\"... in response to the ongoing case regarding his travel ban The President commented..\"</br></br>" +
+                                "\"You could be a lawyer, or you don't have to be a lawyer, If you were a good student in high school</br>" +
+                                "or a bad student in high school, you can understand this.</br>" +
+                                "And it's really incredible to me that we have a court case that's going on so long.\"</br></br>" +
+                                "She felt her stomach drop, immediately she became irate.</br></br>" +
+                                "She could feel anxiety creeping its way up her spine. She cut it off before it gripped her conscious thought.</br>" +
+                                "\"Now is not the time.\" she thought out loud.</br>";
+                    break;
+
+                case "change channel":
+                case "change station":
+                case "change the channel":
+                        response = "";
+                        break;
+
                 case "walk to the door":
                 case "go to the front door":
                 case "move to the front door":
