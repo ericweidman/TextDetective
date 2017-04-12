@@ -253,7 +253,7 @@ public class TextDetectiveController {
                     response = "You are currently logged in as " + userSessionName + ".</br>" +
                             "---</br>" +
                             "'Detective Sara' was programmed and written by Eric Weidman.</br>" +
-                            "If you have any questions/comments/feedback/criticisms/devjobs I would love to hear form you!</br>" +
+                            "If you have any questions/comments/feedback/criticisms/devjobs I would love to hear from you!</br>" +
                             "Feel free to shoot me an email - ericweidman@gmail.com</br>" +
                             "All code for this game can be found at https://github.com/ericweidman/TextDetective</br>" +
                             "If you're reading this, thank you for playing!</br>";
@@ -273,8 +273,8 @@ public class TextDetectiveController {
                             response = "Sara looks around. She is standing on the sidewalk in an average Oakland neighborhood.</br>" +
                                     "It's the early afternoon on a Tuesday. Most of the driveways are empty.</br> " +
                                     "The normal folk who live here are at work.</br>" +
-                                    "All of the houses are rather plain looking. Every nth house or so is seemingly identical.</br>" +
-                                    "The uninteresting house closest to her, she suspects to be empty. Her cruiser is parked in the driveway.</br>" +
+                                    "All of the houses are rather plain looking. Every Nth house or so is seemingly identical.</br>" +
+                                    "She suspects the uninteresting house closest to her to be empty. Her cruiser is parked in the driveway.</br>" +
                                     "What's left of her sense of duty pushes her to the front door.";
                             break;
                         case "front door":
